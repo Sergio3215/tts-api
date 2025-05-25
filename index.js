@@ -6,11 +6,9 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 const app = express();
-app.use(cors({
-    origin: ["*"], // O "*" para cualquiera (no seguro)
-    methods: ["GET", "POST", "OPTIONS"],
-    allowedHeaders: ["Content-Type", "Authorization"]
-}));
+// CORS: permite todos los orígenes (solo para pruebas)
+// Para producción, reemplaza "*" por tu frontend real.
+app.use(cors({ origin: "*" }));
 
 app.use(express.json());
 
