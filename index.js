@@ -17,7 +17,6 @@ app.post('/api/tts', async (req, res) => {
     const { text, voice } = req.body;
 
     try {
-        console.log('Received request for TTS:', { text, voice });
         const response = await elevenlabs.textToSpeech.convert(voice, {
             text: text,
             modelId: 'eleven_flash_v2_5'
@@ -48,6 +47,6 @@ async function streamToBuffer(stream) {
     return Buffer.concat(chunks);
 }
 
-app.listen(3000, () => {
-    console.log('Server is running on port 3000');
+app.listen(process.env.PORT, () => {
+    console.log(`Server is running on port ${process.env.PORT}`);
 });
