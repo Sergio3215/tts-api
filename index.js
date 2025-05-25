@@ -1,10 +1,17 @@
 import { ElevenLabsClient } from '@elevenlabs/elevenlabs-js';
 import express from 'express';
+import cors from 'cors';
 
 import dotenv from 'dotenv';
 dotenv.config();
 
 const app = express();
+app.use(cors({
+    origin: ["*"], // O "*" para cualquiera (no seguro)
+    methods: ["GET", "POST", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"]
+}));
+
 app.use(express.json());
 
 const elevenlabs = new ElevenLabsClient({
