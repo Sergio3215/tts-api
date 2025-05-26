@@ -46,6 +46,11 @@ app.post('/api/tts', async (req, res) => {
     else {
 
         try {
+
+            if(channel == '' || channel == "Your-Channel" ){
+                throw new Error('Channel is not specified or is invalid.');
+            }
+            
             const msg = `El texto no puede superar los 2500 caracteres. El texto que intentaste enviar tiene ${text.length} caracteres.`;
             const ftch = await fetch('https://service-events-twitch-production.up.railway.app/send-message', {
                 method: 'POST',
@@ -61,7 +66,7 @@ app.post('/api/tts', async (req, res) => {
         catch (error) {
 
         }
-        
+
         res.status(401).json({ status: 'Error', error: 'Limite de Caracter Alcanzado', message: 'El texto no puede superar los 2500 caracteres.' });
     }
 
