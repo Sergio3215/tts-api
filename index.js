@@ -21,7 +21,7 @@ const elevenlabs = new ElevenLabsClient({
 app.post('/api/tts', async (req, res) => {
     const { text, voice, channel } = req.body;
 
-    if (text.length < 2500) {
+    if (text.length < 480) {
         try {
             const response = await elevenlabs.textToSpeech.convert(voice, {
                 text: text,
