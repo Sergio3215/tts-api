@@ -19,28 +19,52 @@ const elevenlabs = new ElevenLabsClient({
 //jsCqWAovK2LkecY7zXl4
 
 app.post('/api/tts', async (req, res) => {
-    const { text, voice } = req.body;
+    const { text, voice, channel } = req.body;
 
-    try {
-        const response = await elevenlabs.textToSpeech.convert(voice, {
-            text: text,
-            modelId: 'eleven_flash_v2_5'
-        });
+    if (text.length < 2500) {
+        try {
+            const response = await elevenlabs.textToSpeech.convert(voice, {
+                text: text,
+                modelId: 'eleven_flash_v2_5'
+            });
 
-        // Convierte el stream a buffer:
-        const audioBuffer = await streamToBuffer(response);
+            // Convierte el stream a buffer:
+            const audioBuffer = await streamToBuffer(response);
 
-        // res.json({ response });
-        res.set('Content-Type', 'application/json');
-        res.send({
-            audio: audioBuffer.toString('base64'),
-            status: 'Success'
-        });
+            // res.json({ response });
+            res.set('Content-Type', 'application/json');
+            res.send({
+                audio: audioBuffer.toString('base64'),
+                status: 'Success'
+            });
 
-    } catch (error) {
-        console.error('Error generating TTS:', error);
-        res.status(500).json({ status: 'Error', error: 'Failed to generate TTS', message: error.message });
+        } catch (error) {
+            console.error('Error generating TTS:', error);
+            res.status(500).json({ status: 'Error', error: 'Failed to generate TTS', message: error.message });
+        }
     }
+    else {
+
+        try {
+            const msg = `El texto no puede superar los 2500 caracteres. El texto que intentaste enviar tiene ${text.length} caracteres.`;
+            const ftch = await fetch('https://service-events-twitch-production.up.railway.app/send-message', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    channel: channel,
+                    message: msg
+                })
+            });
+        }
+        catch (error) {
+
+        }
+        
+        res.status(401).json({ status: 'Error', error: 'Limite de Caracter Alcanzado', message: 'El texto no puede superar los 2500 caracteres.' });
+    }
+
 });
 
 // Función utilitaria:
