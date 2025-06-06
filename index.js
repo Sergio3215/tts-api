@@ -134,7 +134,7 @@ app.post('/api/tts', async (req, res) => {
                     input: text,
                     voice: data.voice,
                     instructions: data.instructions,
-                    response_format: "wav"
+                    response_format: "mp3"
                 }),
             });
             const arrayBuffer = await response.arrayBuffer();
