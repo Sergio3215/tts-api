@@ -86,15 +86,70 @@ const getInstructions = (voice) => {
                 voice: 'ash',
                 instructions: "Argentine voice, of a 33 year old young man, with a serious touch. Ideal for documentary videos or narrations."
             };
+        case 'UAgSwRTuuMB0UcxqWTOG':
+            return {
+                voice: 'echo',
+                instructions: "Middle aged mature male voice. Works well for Storytelling."
+            };
+        case 'kQ2PqMG3mrPg5axZCpbK':
+            return {
+                voice: 'echo',
+                instructions: "Un joven argentino masculino, voz grabe y segura de si mismo, dulce y carismatico"
+            };
+        case 'gbTn1bmCvNgk0QEAVyfM':
+            return {
+                voice: 'echo',
+                instructions: "Middle aged male with a Mexican Spanish accent. Great for Narrations."
+            };
+        case 'LGAG9SB8uLv5PsjBMv2e':
+            return {
+                voice: 'onyx',
+                instructions: "Middle aged mature male voice. Works well for Storytelling."
+            };
+        case 'g5CIjZEefAph4nQFvHAz':
+            return {
+                voice: 'ballad',
+                instructions: "Narradora nata, con voz clara, dulce, pero seria, con una voz acertiva y concreta en sus palabras"
+            };
         case 'vq5cuHPb1qXLvcxQ2G6R':
             return {
                 voice: 'sage',
                 instructions: "A warm and affectionate female voice with a soft and seductive touch."
             };
-        case 'UAgSwRTuuMB0UcxqWTOG':
+        case 'jsCqWAovK2LkecY7zXl4':
+            return {
+                voice: 'coral',
+                instructions: "voz carismatica, divertida, voz angelical, voz de inocente, con un toque de maldad en su voz, con un acento latino"
+            };
+        case 'AZnzlk1XvdvUeBnXmlld':
+            return {
+                voice: 'nova',
+                instructions: "Otaku, creida, con aires de ser superada, y muy egocentrica, con un toque de voz juguetona y a la vez muy molesta, con un acento latino"
+            };
+        case 'MF3mGyEYCl7XYWbV9V6O':
+            return {
+                voice: 'coral',
+                instructions: "voz irritable masculina con un toque de voz juguetona y a la vez muy molesta, con un acento latino"
+            };
+        case 'LcfcDJNUP1GQjkzn1xUU':
             return {
                 voice: 'shimmer',
-                instructions: "Colombiana, voz dulce, suave, penosa, timida y voz de angel"
+                instructions: "una voz femenina con un toque de sensualidad, seca y carismatica, con un acento latino"
+            };
+        case 'piTKgcLEGmPE4e6mEKli':
+            return {
+                voice: 'shimmer',
+                instructions: "mujer de mediana edad, voz madura pero a la vez joven, dulce y carismatica, con un toque de sensualidad"
+            };
+        case '9rvdnhrYoXoUt4igKpBw':
+            return {
+                voice: 'coral',
+                instructions: "divertida, extrovertida, segura de si misma, caprichosa, y con voz de gatita"
+            };
+        case 'KoIf2KgeJA8uoGcgKIao':
+            return {
+                voice: 'sage',
+                instructions: "Divertida, timida, sensual, provocativa, con acento venezolana"
             };
         default:
             return {
