@@ -134,7 +134,7 @@ const getInstructions = (voice) => {
         case 'LcfcDJNUP1GQjkzn1xUU':
             return {
                 voice: 'shimmer',
-                instructions: "una voz femenina con un toque de sensualidad,carismatica, con un acento colombiana bien marcada y que tenga una voz dulce y amorosa"
+                instructions: "una voz femenina con un toque de sensualidad,carismatica, con un acento colombiana bien marcada y paisa, que se note el acento colombiano y paisa, y que tenga una voz dulce y amorosa"
             };
         case 'piTKgcLEGmPE4e6mEKli':
             return {
