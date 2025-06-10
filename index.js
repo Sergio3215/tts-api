@@ -134,21 +134,22 @@ const getInstructions = (voice) => {
         case 'LcfcDJNUP1GQjkzn1xUU':
             return {
                 voice: 'sage',
-                instructions: `Voice profile:
-                                - Gender: Female
-                                - Age: Young adult (20s)
-                                - Accent: Colombian (Paisa, Medellín region)
-                                - Style: Cheerful, expressive, slightly melodic
-                                - Pitch: Slightly high (around +10%)
-                                - Speaking rate: Medium-fast (~95–100%)
-                                - Intonation: Musical with pitch variation
-                                - Personality: Friendly, warm, lively
+                instructions: "Speak with a Colombian paisa accent, feminine voice, cheerful, young, expressive and friendly tone. Emphasize local expressions like 'parce', 've', and 'qué más pues'. Add melodic intonation."
+                // instructions: `Voice profile:
+                //                 - Gender: Female
+                //                 - Age: Young adult (20s)
+                //                 - Accent: Colombian (Paisa, Medellín region)
+                //                 - Style: Cheerful, expressive, slightly melodic
+                //                 - Pitch: Slightly high (around +10%)
+                //                 - Speaking rate: Medium-fast (~95–100%)
+                //                 - Intonation: Musical with pitch variation
+                //                 - Personality: Friendly, warm, lively
                                             
-                                Example text:
-                                "Hola, ¿qué más pues, parce? Yo soy tu parcera paisa y vengo con toda la buena energía para contarte                                unas cosas bien bacanas. Ve, no te perdás esto, que está una chimba."
+                //                 Example text:
+                //                 "Hola, ¿qué más pues, parce? Yo soy tu parcera paisa y vengo con toda la buena energía para contarte                                unas cosas bien bacanas. Ve, no te perdás esto, que está una chimba."
                                             
-                                Use natural pauses in commas, a rising intonation in questions, and slight emphasis on local expressions                                like “parce”, “ve”, “qué más pues”, and “una chimba”.
-                                `
+                //                 Use natural pauses in commas, a rising intonation in questions, and slight emphasis on local expressions                                like “parce”, “ve”, “qué más pues”, and “una chimba”.
+                //                 `
                 // instructions: "una voz muy femenina con un toque de sensualidad,carismatica, con un acento colombiana y paisa y que tenga una voz dulce y amorosa, Habla con acento colombiano, como si fueras un paisa animada y cercana"
             };
         case 'piTKgcLEGmPE4e6mEKli':
