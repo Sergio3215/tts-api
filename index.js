@@ -133,7 +133,7 @@ const getInstructions = (voice) => {
             };
         case 'LcfcDJNUP1GQjkzn1xUU':
             return {
-                voice: 'nova',
+                voice: 'shimmer',
                 // instructions: "Speak with a Colombian paisa accent, feminine voice, cheerful, young, expressive and friendly tone. Emphasize local expressions like 'parce', 've', and 'qué más pues'. Add melodic intonation."
                 /*instructions: `Voice profile:
                                 - Gender: Female
