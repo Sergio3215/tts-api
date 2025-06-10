@@ -150,7 +150,7 @@ const getInstructions = (voice) => {
                                             
                                 Use natural pauses in commas, a rising intonation in questions, and slight emphasis on local expressions                                like “parce”, “ve”, “qué más pues”, and “una chimba”.
                                 `*/
-                instructions: "habla con acento paisa colombiano, voz femenina, alegre, joven, expresiva y sensual con ganas de enamorar al que la oye. Enfatiza expresiones locales como 'parce', 've' y 'qué más pues' 'papasito' 'hoy' y frases finales. Añade una entonación melódica."
+                instructions: "habla con acento paisa colombiano, voz femenina, alegre, joven, expresiva y sensual con ganas de enamorar al que la oye. Enfatiza expresiones locales como 'parce', 've' y 'qué más pues' 'papasito' 'hoy' y frases finales. Añade una entonación melódica, con un toque de sensualidad y picardía y voz juguetona y angelical a la vez"
             };
         case 'piTKgcLEGmPE4e6mEKli':
             return {
