@@ -266,10 +266,10 @@ app.post('/api/translate', async (req, res) => {
     const completion = await openai.chat.completions.create({
         model: 'gpt-4o',
         messages: [
-            { role: 'system', content: `Traducí todo lo que recibas al español latino.
-                Si recibis algo en español, traducilo en ingles.
-                Siempre usando una guia de que idioma traducis al idioma destino. 
-                Por ejemplo si traducis del ingles al español mostrarias esto en > es y si traducis del español al ingles pondrias es > en` },
+            { role: 'system', content: `Detecta el idioma y traducilo al español latino.
+                Usa ISO de origen del idioma, para identificar la traduccion. 
+                Por ejemplo si traducis del ingles al español mostrarias esto en > es.
+                Solo traduci, no digas mas nada.` },
             { role: 'user', content: text }
         ]
     });
