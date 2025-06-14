@@ -1,9 +1,15 @@
 import { ElevenLabsClient } from '@elevenlabs/elevenlabs-js';
 import express from 'express';
 import cors from 'cors';
+import OpenAIApi from 'openai';
 
 import dotenv from 'dotenv';
 dotenv.config();
+
+// Configuración OpenAI
+const openai = new OpenAIApi({
+  apiKey: process.env.OPENAI_API_KEY
+});
 
 const app = express();
 // CORS: permite todos los orígenes (solo para pruebas)
@@ -134,22 +140,6 @@ const getInstructions = (voice) => {
         case 'LcfcDJNUP1GQjkzn1xUU':
             return {
                 voice: 'shimmer',
-                // instructions: "Speak with a Colombian paisa accent, feminine voice, cheerful, young, expressive and friendly tone. Emphasize local expressions like 'parce', 've', and 'qué más pues'. Add melodic intonation."
-                /*instructions: `Voice profile:
-                                - Gender: Female
-                                - Age: Young adult (20s)
-                                - Accent: Colombian (Paisa, Medellín region)
-                                - Style: Cheerful, expressive, slightly melodic
-                                - Pitch: Slightly high (around +10%)
-                                - Speaking rate: Medium-fast (~95–100%)
-                                - Intonation: Musical with pitch variation
-                                - Personality: Friendly, warm, lively
-                                            
-                                Example text:
-                                "Hola, ¿qué más pues, parce? Yo soy tu parcera paisa y vengo con toda la buena energía para contarte                                unas cosas bien bacanas. Ve, no te perdás esto, que está una chimba."
-                                            
-                                Use natural pauses in commas, a rising intonation in questions, and slight emphasis on local expressions                                like “parce”, “ve”, “qué más pues”, and “una chimba”.
-                                `*/
                 instructions: "habla con acento paisa colombiano, voz femenina, alegre, joven, expresiva y sensual con ganas de enamorar al que la oye. Enfatiza expresiones locales como 'parce', 've' y 'qué más pues' 'papasito' 'hoy' y frases finales. Añade una entonación melódica, con un toque de sensualidad y picardía y voz juguetona y angelical a la vez"
             };
         case 'piTKgcLEGmPE4e6mEKli':
@@ -176,6 +166,14 @@ const getInstructions = (voice) => {
 
 }
 
+// Función utilitaria:
+async function streamToBuffer(stream) {
+    const chunks = [];
+    for await (const chunk of stream) {
+        chunks.push(chunk);
+    }
+    return Buffer.concat(chunks);
+}
 
 //v0.2
 app.post('/api/tts', async (req, res) => {
@@ -261,14 +259,23 @@ app.post('/api/tts', async (req, res) => {
 
 });
 
-// Función utilitaria:
-async function streamToBuffer(stream) {
-    const chunks = [];
-    for await (const chunk of stream) {
-        chunks.push(chunk);
-    }
-    return Buffer.concat(chunks);
-}
+app.post('/api/translate', async (req, res) => {
+
+    const {text} = req.body
+
+    const completion = await openai.chat.completions.create({
+        model: 'gpt-4o',
+        messages: [
+            { role: 'system', content: `Traducí todo lo que recibas al español latino.
+                Si recibis algo en español, traducilo en ingles.
+                Siempre usando una guia de que idioma traducis al idioma destino. 
+                Por ejemplo si traducis del ingles al español mostrarias esto en > es y si traducis del español al ingles pondrias es > en` },
+            { role: 'user', content: text }
+        ]
+    });
+    // console.log(completion.choices[0].message.content)
+    res.json({message: completion.choices[0].message.content})
+})
 
 app.listen(process.env.PORT, () => {
     console.log(`Server is running on port ${process.env.PORT}`);
