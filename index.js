@@ -280,7 +280,7 @@ app.post('/api/translate', async (req, res) => {
 
     const idiomaOrigen = await detectarIdioma(text);
 
-    if (idiomaOrigen === 'es') {
+    if (idiomaOrigen === 'es' || idiomaOrigen == "undetermined") {
         return res.json({ skip: true, message: 'No se traduce porque ya está en español.' });
     }
 
