@@ -8,7 +8,7 @@ dotenv.config();
 
 // Configuración OpenAI
 const openai = new OpenAIApi({
-  apiKey: process.env.OPENAI_API_KEY
+    apiKey: process.env.OPENAI_API_KEY
 });
 
 const app = express();
@@ -259,21 +259,45 @@ app.post('/api/tts', async (req, res) => {
 
 });
 
+async function detectarIdioma(texto) {
+    const completion = await openai.chat.completions.create({
+        model: 'gpt-4o',
+        messages: [
+            {
+                role: 'system',
+                content: 'Detecta el idioma del siguiente texto y devolvé solo el código ISO (ej: es, en, fr, pt). No expliques nada.'
+            },
+            { role: 'user', content: texto }
+        ]
+    });
+
+    return completion.choices[0].message.content.trim().toLowerCase();
+}
+
 app.post('/api/translate', async (req, res) => {
 
-    const {text} = req.body
+    const { text } = req.body
+
+    const idiomaOrigen = await detectarIdioma(text);
+
+    if (idiomaOrigen === 'es') {
+        return res.json({ skip: true, message: 'No se traduce porque ya está en español.' });
+    }
 
     const completion = await openai.chat.completions.create({
         model: 'gpt-4o',
         messages: [
-            { role: 'system', content: `Detecta el idioma y traducilo al español.
-                Usa ISO de origen del idioma, para identificar la traduccion.
-                Si el texto esta en español, no digas nada` },
+            {
+                role: 'system',
+                content: `Traducí del idioma ${idiomaOrigen} al español. Solo devolvé el texto traducido.`
+            },
             { role: 'user', content: text }
         ]
     });
+
+    const traduccion = completion.choices[0].message.content.trim();
     // console.log(completion.choices[0].message.content)
-    res.json({message: completion.choices[0].message.content})
+    res.json({ skip: false, message: `${idiomaOrigen} > es\n ${traduccion}` });
 })
 
 app.listen(process.env.PORT, () => {
