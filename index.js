@@ -268,7 +268,7 @@ app.post('/api/translate', async (req, res) => {
         messages: [
             { role: 'system', content: `Detecta el idioma y traducilo al español.
                 Usa ISO de origen del idioma, para identificar la traduccion.
-                Solo traduci si no es español, no digas mas nada.` },
+                Si el texto esta en español, no digas nada` },
             { role: 'user', content: text }
         ]
     });
