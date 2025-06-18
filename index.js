@@ -4,6 +4,8 @@ import cors from 'cors';
 import OpenAIApi from 'openai';
 
 import dotenv from 'dotenv';
+import { toolsArray } from './tools-assistant.js';
+import { enviarMensaje, GenerarRespuesta } from './thread.js';
 dotenv.config();
 
 // Configuración OpenAI
@@ -299,6 +301,91 @@ app.post('/api/translate', async (req, res) => {
     // console.log(completion.choices[0].message.content)
     res.json({ skip: false, message: `${idiomaOrigen} > es\n ${traduccion}` });
 })
+
+
+//Assistant
+const assistantID = "asst_sUvBLH8Dl5EsBkY45wMjcoQc";
+
+app.post('/api/create-assistant', async (req, res) => {
+
+    const { name, instructions } = req.body;
+
+    try {
+        const assistant = await openai.beta.assistants.create({
+            name: name,
+            instructions: instructions,
+            tools: toolsArray,
+            model: "gpt-4o"
+        });
+
+        res.status(201).json({ success: true, message: "creado exitosamente.", asst_id: assistant.id });
+    } catch (error) {
+        res.status(400).json({ success: false, message: error.message });
+    }
+
+})
+
+app.post('/api/create-thread', async (req, res) => {
+    const thread = await openai.beta.threads.create();
+
+    res.status(201).json({
+        id: thread.id
+    })
+})
+
+app.post('/api/respuesta', async (req, res) => {
+    const { threadId, msg } = req.body;
+    let respuesta = {};
+    let th_id = threadId;
+
+    if (th_id != undefined && th_id != "") {
+        // console.log("try", th_id)
+    }
+    else {
+        th_id = "thread_oD5IkSK6nVshjgJ652FHmYEg";
+    }
+    const run = await enviarMensaje(openai, th_id, assistantID, msg);
+
+    try {
+        await getStatusRun(run.id, th_id)
+    } catch (error) {
+        console.log(error)
+    }
+
+    respuesta = await GenerarRespuesta(openai, run);
+
+    res.status(201).json({
+        respuesta: respuesta
+    })
+})
+
+const getStatusRun = async (run, threadId) => {
+    try {
+        console.log(threadId)
+        let runStatus = '';
+        do {
+            let url = `https://api.openai.com/v1/threads/${threadId}/runs/${run}`
+            const statusResp = await fetch(url, {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${process.env.OPENAI_API_KEY}`,
+                    'Content-Type': 'application/json',
+                    'OpenAI-Beta': 'assistants=v2'
+                }
+            });
+
+            const runner = await statusResp.json();
+            runStatus = runner.status;
+            console.log('✅ Estado del run:', runStatus);
+        }
+        while (runStatus != "completed")
+
+    } catch (error) {
+        console.error('❌ Error al obtener status del run:', error);
+    }
+}
+
+
 
 app.listen(process.env.PORT, () => {
     console.log(`Server is running on port ${process.env.PORT}`);
